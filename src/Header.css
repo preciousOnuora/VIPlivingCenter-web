@@ -1,0 +1,233 @@
+/* header.css */
+/* 
+ * Header component styles including:
+ * - Fixed header bar with hamburger menu
+ * - Sliding sidebar navigation from right
+ * - Overlay background when sidebar is open
+ * - Responsive design for mobile devices
+ */
+
+/* =================================
+   OVERLAY STYLES
+   ================================= */
+/* Dark overlay that appears behind sidebar when open */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 40; /* Below sidebar but above main content */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* =================================
+     HEADER STYLES
+     ================================= */
+  /* Fixed header bar at top of page */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 50; /* Above overlay and sidebar */
+    transition: all 0.3s ease;
+  }
+  
+  
+  /* Header content container with flex layout */
+   .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2px 9px;
+  }
+  
+  /* Spacer element to center the title */
+  /* .header-spacer {
+    width: 40px; /* Same width as hamburger button */
+  /* }  */ 
+  
+  /* Title section in center of header */
+   .header-image {
+    flex: 1;
+    text-align: left;
+    margin-left: 20px;
+  } 
+
+  .stay-with-us-button {
+    width: 120px;
+    height: 35px;
+    background-color: white;
+    color: rgb(63, 102, 54);
+    padding: 4px 8px;
+    border: none;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: #709679;
+    border-radius: 999px; /* Oval shape */
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .stay-with-us-button:hover {
+    background-color: #c4decf;
+  }
+  
+  /* .header-image h1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937; /* Dark gray */
+    /* margin: 0;
+  } 
+  */ 
+  
+  /* Hamburger menu button */
+  .hamburger-button {
+    padding: 8px;
+    border-radius: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Hover effect for hamburger button */
+  /* .hamburger-button:hover {
+    background-color: #f3f4f6; /* Light gray */
+  /* } */
+  
+  /* Hamburger menu icon */
+  .hamburger-icon {
+    width: 24px;
+    height: 24px;
+    color: #374151; /* Medium gray */
+  }
+  
+  /* =================================
+     SIDEBAR STYLES
+     ================================= */
+  /* Main sidebar container - slides in from right */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 256px; /* Fixed width sidebar */
+    background-color: #111827; /* Dark gray background */
+    color: white;
+    z-index: 50; /* Same as header */
+    transform: translateX(100%); /* Hidden by default */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Sidebar visible state */
+  .sidebar.open {
+    transform: translateX(0); /* Slide into view */
+  }
+  
+  /* Sidebar content wrapper */
+  .sidebar-content {
+    padding: 24px;
+  }
+  
+  /* Sidebar header with title and close button */
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  
+  /* Sidebar title */
+  .sidebar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Close button inside sidebar */
+  .sidebar-close-button {
+    padding: 8px;
+    border-radius: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Hover effect for close button */
+  .sidebar-close-button:hover {
+    background-color: #374151; /* Darker gray */
+  }
+  
+  /* =================================
+     NAVIGATION STYLES
+     ================================= */
+  /* Navigation list container */
+  .sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Individual navigation item */
+  .sidebar-nav-item {
+    margin-bottom: 16px;
+  }
+  
+  /* Navigation link styling */
+  .sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Hover effect for navigation links */
+  .sidebar-nav-link:hover {
+    background-color: #374151; /* Darker gray */
+  }
+  
+  /* Navigation icon */
+  .sidebar-nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    transition: transform 0.2s ease;
+  }
+  
+  /* Scale effect on icon hover */
+  .sidebar-nav-link:hover .sidebar-nav-icon {
+    transform: scale(1.1);
+  }
+  
+  /* Navigation text */
+  .sidebar-nav-text {
+    font-size: 1.125rem;
+  }
+  
+  /* =================================
+     RESPONSIVE DESIGN
+     ================================= */
+  /* Tablet and mobile adjustments */
+  @media (max-width: 768px) {
+    /* Wider sidebar on mobile for better touch targets */
+    .sidebar {
+      width: 280px;
+    }
+    
+    /* Smaller header title on mobile */
+    /* .header-image h1 {
+      font-size: 1.125rem;
+    } */
+  }

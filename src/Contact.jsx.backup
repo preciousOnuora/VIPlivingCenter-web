@@ -1,0 +1,191 @@
+import React, { useState } from 'react';
+import contactImg from './Images/contactImg.jpg';
+
+const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert(result.message);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        alert('Error: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to send message. Please try again later.');
+    }  };
+
+  return (
+    <>
+      {/* Hero Section */}
+      <section className="community-hero-section">
+        <div className="community-image-overlay">
+          <img src={contactImg} className="community-hero-img" alt="Community" />
+          <div className="community-overlay-text">
+            <h2>Contact us</h2>
+          </div>
+        </div>
+      </section>
+
+      {/* Introduction Section */}
+      <section className="contact-intro-section">
+        <div className="contact-intro-container">
+          <h2>Get in Touch</h2>
+          <p>
+            We understand how challenging it can be to find the right care for a loved one, and we are here to help. 
+            At VIP Living Centers, we offer a home-like environment where your family members can thrive, with compassionate 
+            and expert care tailored to their individual needs. Whether you are seeking assisted living, memory care, or 
+            respite care, our dedicated staff is ready to provide the support and attention your loved ones deserve.
+          </p>
+          <p>
+            We invite you to reach out and learn more about how we can assist your family in finding a safe, welcoming, 
+            and vibrant place for your loved one to call home.
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Information and Form Section */}
+      <section className="contact-main-section">
+        <div className="contact-main-container">
+          {/* Contact Information */}
+          <div className="contact-info-section">
+            <h2>VIP LIVING CENTER</h2>
+            <div className="contact-details">
+              <div className="contact-item">
+                <h3>Address</h3>
+                <p>3219 Vinson Ct.<br />Irving, TX 75060</p>
+              </div>
+              <div className="contact-item">
+                <h3>Phone</h3>
+                <p><a href="tel:(972) 513-0224">(972) 513-0224</a></p>
+              </div>
+              <div className="contact-item">
+                <h3>Email</h3>
+                <p><a href="mailto:viplc.management@gmail.com">viplc.management@gmail.com</a></p>
+              </div>
+              <div className="contact-item">
+                <h3>Hours</h3>
+                <p>24/7 Care Available<br />Office Hours: Monday - Friday, 9:00 AM - 5:00 PM</p>
+              </div>
+            </div>
+            
+            <div className="contact-cta">
+              <h3>Ready to Learn More?</h3>
+              <p>We'd love to show you around our facility and answer any questions you may have. 
+                 Contact us today to schedule a tour or consultation.</p>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="contact-form-section">
+            <h2>Send Us a Message</h2>
+            <form onSubmit={handleSubmit} className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name">Name *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your full name"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email">Email *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="subject">Subject *</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  placeholder="What is this regarding?"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="message">Message *</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows="6"
+                  placeholder="Please tell us more about your inquiry..."
+                ></textarea>
+              </div>
+
+              <button type="submit" className="submit-button">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="contact-map-section">
+        <div className="contact-map-container">
+          <h2>Visit Our Location</h2>
+          <div className="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3350.8876122578!2d-96.9944!3d32.8147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDQ4JzUyLjkiTiA5NsKwNTknNDAuMCJX!5e0!3m2!1sen!2sus!4v1234567890"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="VIP Living Centers Location"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Contact;

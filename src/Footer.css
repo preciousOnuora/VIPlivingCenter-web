@@ -1,0 +1,159 @@
+.footerAddress {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+.footerAddress h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.mainFooter {
+    background-color: #34495e;
+    color: white;
+    padding: 0.5rem 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.footer-section h4 {
+    color: #ecf0f1;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 1.55rem;
+}
+
+.footer-section ul li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #3498db;
+}
+
+.footer-section p {
+    color: #bdc3c7;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.copyright {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid #34495e;
+}
+
+.copyright p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Form styling */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #5a6c7d;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #bdc3c7;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .footerAddress h3 {
+        font-size: 1rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 0.5rem;
+    }
+    
+    .submit-btn {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        padding: 0 0.25rem;
+        gap: 1rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 0.5rem;
+        font-size: 14px;
+    }
+    
+    .submit-btn {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
