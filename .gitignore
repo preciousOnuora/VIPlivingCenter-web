@@ -105,3 +105,16 @@ Thumbs.db
 backend/.env
 backend/logs/
 backend/*.log
+
+# Media files (large files that shouldn't be in git)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.webm
+src/Videos/
+src/Images/*.mp4
+src/Images/*.mov
+src/Images/*.avi
