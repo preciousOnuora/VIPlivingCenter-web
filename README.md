@@ -1,71 +1,210 @@
-# Getting Started with Create React App
+# VIP Living Centers Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive website for VIP Living Centers - a senior living community offering assisted living, memory care, and respite care services.
 
-## Available Scripts
+## 🌟 Features
 
-In the project directory, you can run:
+- **Responsive Design**: Mobile-first approach with modern UI/UX
+- **Contact Forms**: Integrated contact and footer forms with backend API
+- **Dynamic Routing**: React Router for seamless navigation
+- **Modern UI**: Beautiful animations and smooth transitions
+- **Production Ready**: Optimized for deployment and production use
 
-### `npm start`
+## 🚀 Quick Start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js >= 16.0.0
+- npm >= 8.0.0
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd my-website
+   ```
 
-### `npm run build`
+2. **Install frontend dependencies**
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Install backend dependencies**
+   ```bash
+   cd backend
+   npm install
+   cd ..
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. **Set up environment variables**
+   ```bash
+   # Copy the example environment file
+   cp backend/env.example backend/.env
+   
+   # Edit backend/.env with your actual values
+   # Update EMAIL_USER, EMAIL_PASS, and other variables
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. **Start development servers**
+   ```bash
+   # Start both frontend and backend concurrently
+   npm run dev
+   
+   # Or start them separately:
+   # Frontend: npm start
+   # Backend: npm run backend
+   ```
 
-### `npm run eject`
+## 🛠️ Available Scripts
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Frontend
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm test` - Run tests
+- `npm run eject` - Eject from Create React App
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Backend
+- `npm run backend` - Start backend development server
+- `npm run backend:prod` - Start backend in production mode
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Combined
+- `npm run dev` - Start both frontend and backend
+- `npm run build:all` - Build both frontend and backend
+- `npm run deploy` - Deploy to GitHub Pages
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🌍 Environment Variables
 
-## Learn More
+### Backend (.env)
+```env
+PORT=5000
+NODE_ENV=development
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+FRONTEND_URL=http://localhost:3000
+PRODUCTION_FRONTEND_URL=https://yourdomain.com
+PRODUCTION_BACKEND_URL=https://yourdomain.com/api
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Frontend
+The frontend automatically detects the environment and uses appropriate API URLs.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🚀 Deployment
 
-### Code Splitting
+### GitHub Pages
+1. **Build the project**
+   ```bash
+   npm run build
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. **Deploy to GitHub Pages**
+   ```bash
+   npm run deploy
+   ```
 
-### Analyzing the Bundle Size
+### Manual Deployment
+1. **Build the frontend**
+   ```bash
+   npm run build
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+2. **Upload the `build` folder** to your web server
 
-### Making a Progressive Web App
+3. **Deploy the backend** to your hosting service (Heroku, Vercel, etc.)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📁 Project Structure
 
-### Advanced Configuration
+```
+my-website/
+├── public/                 # Static files
+├── src/                    # React source code
+│   ├── components/         # React components
+│   ├── Images/            # Image assets
+│   ├── Videos/            # Video assets
+│   └── config.js          # Frontend configuration
+├── backend/                # Express.js backend
+│   ├── config.js          # Backend configuration
+│   ├── server.js          # Express server
+│   └── package.json       # Backend dependencies
+└── package.json            # Frontend dependencies
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🔧 Configuration
 
-### Deployment
+### Frontend Configuration
+Edit `src/config.js` to update:
+- API endpoints
+- Contact information
+- App settings
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Backend Configuration
+Edit `backend/config.js` to update:
+- Server settings
+- Email configuration
+- CORS settings
 
-### `npm run build` fails to minify
+## 📧 Email Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# VIPlivingCenter-web
+To enable email functionality:
+
+1. **Gmail Setup**
+   - Enable 2-factor authentication
+   - Generate an app password
+   - Update `EMAIL_USER` and `EMAIL_PASS` in backend `.env`
+
+2. **Other Email Providers**
+   - Update `EMAIL_HOST`, `EMAIL_PORT`, and other settings in backend `.env`
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Port conflicts**
+   - Change `PORT` in backend `.env`
+   - Update frontend config if needed
+
+2. **CORS errors**
+   - Check `FRONTEND_URL` in backend `.env`
+   - Ensure URLs match exactly
+
+3. **Email not working**
+   - Verify email credentials in `.env`
+   - Check email provider settings
+
+### Development Tips
+
+- Use `npm run dev` to start both servers simultaneously
+- Check browser console and terminal for error messages
+- Use the health check endpoint: `/api/health`
+
+## 📱 Browser Support
+
+- Chrome >= 90
+- Firefox >= 88
+- Safari >= 14
+- Edge >= 90
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+## 📞 Support
+
+For support or questions:
+- Phone: (972) 513-0224
+- Email: viplc.management@gmail.com
+- Address: 3219 Vinson Ct, Irving, TX 75060
+
+---
+
+**VIP Living Centers** - Providing compassionate care in a home-like environment.

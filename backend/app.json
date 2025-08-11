@@ -1,0 +1,28 @@
+{
+  "name": "vip-living-centers-backend",
+  "description": "Backend API for VIP Living Centers website",
+  "repository": "https://github.com/yourusername/your-repo-name",
+  "logo": "https://your-logo-url.com/logo.png",
+  "keywords": ["node", "express", "senior-living", "api"],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment to run the application in",
+      "value": "production"
+    },
+    "PORT": {
+      "description": "Port to run the server on",
+      "value": "5000"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+} 

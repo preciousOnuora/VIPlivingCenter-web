@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import contactImg from './Images/contactImg.jpg';
+import config from './config';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,9 @@ const Contact = () => {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,11 +20,37 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch(`${config.apiBaseUrl}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setSubmitStatus({ type: 'success', message: result.message });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus({ type: 'error', message: result.message });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitStatus({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try again later.' 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -28,7 +58,7 @@ const Contact = () => {
       {/* Hero Section */}
       <section className="community-hero-section">
         <div className="community-image-overlay">
-          <img src={contactImg} className="community-hero-img" alt="Community" />
+          <img src={contactImg} className="community-hero-img" alt="Contact Us" />
           <div className="community-overlay-text">
             <h2>Contact us</h2>
           </div>
@@ -61,15 +91,15 @@ const Contact = () => {
             <div className="contact-details">
               <div className="contact-item">
                 <h3>Address</h3>
-                <p>3219 Vinson Ct.<br />Irving, TX 75060</p>
+                <p>{config.contact.address}</p>
               </div>
               <div className="contact-item">
                 <h3>Phone</h3>
-                <p><a href="tel:(972) 513-0224">(972) 513-0224</a></p>
+                <p><a href={`tel:${config.contact.phone}`}>{config.contact.phone}</a></p>
               </div>
               <div className="contact-item">
                 <h3>Email</h3>
-                <p><a href="mailto:viplc.management@gmail.com">viplc.management@gmail.com</a></p>
+                <p><a href={`mailto:${config.contact.email}`}>{config.contact.email}</a></p>
               </div>
               <div className="contact-item">
                 <h3>Hours</h3>
@@ -87,6 +117,14 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="contact-form-section">
             <h2>Send Us a Message</h2>
+            
+            {/* Status Messages */}
+            {submitStatus && (
+              <div className={`status-message ${submitStatus.type}`}>
+                {submitStatus.message}
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="contact-form">
               <div className="form-group">
                 <label htmlFor="name">Name *</label>
@@ -98,6 +136,7 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   placeholder="Your full name"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -111,6 +150,7 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   placeholder="your.email@example.com"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -124,6 +164,7 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   placeholder="What is this regarding?"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -137,11 +178,16 @@ const Contact = () => {
                   required
                   rows="6"
                   placeholder="Please tell us more about your inquiry..."
+                  disabled={isSubmitting}
                 ></textarea>
               </div>
 
-              <button type="submit" className="submit-button">
-                Send Message
+              <button 
+                type="submit" 
+                className="submit-button"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>

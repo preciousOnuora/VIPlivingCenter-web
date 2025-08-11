@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Home, User, Settings, Mail, Info } from 'lucide-react';
 import './Footer.css';
 import { Link, useLocation } from 'react-router-dom';
+import config from './config';
 
 const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
   const location = useLocation();
@@ -18,6 +19,9 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
   const handleLinkClick = () => {
     if (ToggleEvent) {
       ToggleEvent();
@@ -33,9 +37,11 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
 
   const handleFooterSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
     
     try {
-      const response = await fetch('http://localhost:5001/api/footer-contact', {
+      const response = await fetch(`${config.apiBaseUrl}/footer-contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,14 +52,19 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
       const result = await response.json();
       
       if (result.success) {
-        alert(result.message);
+        setSubmitStatus({ type: 'success', message: result.message });
         setFooterFormData({ name: '', email: '', phone: '', message: '' });
       } else {
-        alert('Error: ' + result.message);
+        setSubmitStatus({ type: 'error', message: result.message });
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to send message. Please try again later.');
+      setSubmitStatus({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try again later.' 
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -69,7 +80,7 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
   return (
     <>
     <section className='footerAddress'>
-        <h3>VIP Living Centers — 3219 Vinson Ct, Irving, TX 75060</h3>
+        <h3>VIP Living Centers — {config.contact.address}</h3>
     </section>
 
     <section className='mainFooter'>
@@ -89,12 +100,21 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
         
         <div className="footer-section">
           <h4>Contact Info</h4>
-          <p>Phone: (972) 513-0224</p>
-          <p>Email: viplc.management@gmail.com</p>
+          <p>Phone: {config.contact.phone}</p>
+          <p>Email: {config.contact.email}</p>
           <p>Hours: 24/7 Care Available</p>
         </div>
         
         <div className="footer-section">
+          <h4>Send us a message</h4>
+          
+          {/* Status Messages */}
+          {submitStatus && (
+            <div className={`footer-status-message ${submitStatus.type}`}>
+              {submitStatus.message}
+            </div>
+          )}
+          
           <form onSubmit={handleFooterSubmit}>
             <div className="form-group">
               <input 
@@ -104,6 +124,7 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
                 value={footerFormData.name}
                 onChange={handleFooterFormChange}
                 required 
+                disabled={isSubmitting}
               />
             </div>
             <div className="form-group">
@@ -114,6 +135,7 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
                 value={footerFormData.email}
                 onChange={handleFooterFormChange}
                 required 
+                disabled={isSubmitting}
               />
             </div>
             <div className="form-group">
@@ -124,6 +146,7 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
                 value={footerFormData.phone}
                 onChange={handleFooterFormChange}
                 required 
+                disabled={isSubmitting}
               />
             </div>
             <div className="form-group">
@@ -134,9 +157,16 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
                 value={footerFormData.message}
                 onChange={handleFooterFormChange}
                 required
+                disabled={isSubmitting}
               ></textarea>
             </div>
-            <button type="submit" className="submit-btn">Submit</button>
+            <button 
+              type="submit" 
+              className="submit-btn"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Submit'}
+            </button>
           </form>
         </div>
       </div>
