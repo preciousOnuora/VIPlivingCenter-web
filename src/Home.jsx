@@ -8,7 +8,6 @@
  */
 import React, { useEffect } from 'react';
 import homeImg from './Images/homeImage.jpg';
-// import welcomeVideo from './Videos/vipvideo.mp4'; // Temporarily disabled for Vercel deployment
 import sunsetImg from './Images/sunset.jpg';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -95,7 +94,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video Section - Temporarily replaced with placeholder */}
+      {/* Video Section - YouTube Embed */}
       <section className="home-video-section">
         <div className="home-video-container">
           <h2 data-aos="fade-up">Take a Virtual Tour</h2>
@@ -103,11 +102,38 @@ const Home = () => {
             See our facility and meet our caring staff
           </p>
           <div className="video-wrapper" data-aos="zoom-in">
-            <div className="video-placeholder">
-              <p>🎥 Virtual Tour Video Coming Soon</p>
-              <p>Contact us to schedule an in-person tour!</p>
-              <Link to="/contact" className="cta-btn primary">Schedule a Tour</Link>
-            </div>
+            {/* Direct Video from Wayback Machine */}
+            <video controls width="100%" height="400" preload="metadata">
+              <source src="https://web.archive.org/web/20240423102657im_/https://viplivingcenters.com/wp-content/uploads/2021/08/VIP-VIDEO.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            
+            {/* YouTube Embed (Alternative) */}
+            {/* <iframe
+              width="100%"
+              height="400"
+              src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE"
+              title="VIP Living Centers Virtual Tour"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe> */}
+            
+            {/* Local Video (for development) */}
+            {/* <video controls width="100%" height="400">
+              <source src={welcomeVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video> */}
+            
+            {/* Vimeo Embed (Alternative) */}
+            {/* <iframe
+              src="https://player.vimeo.com/video/YOUR_VIMEO_ID_HERE"
+              width="100%"
+              height="400"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            ></iframe> */}
           </div>
         </div>
       </section>
