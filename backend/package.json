@@ -11,13 +11,19 @@
     "build": "echo \"Backend is ready to run\"",
     "lint": "echo \"Linting not configured yet\""
   },
-  "keywords": ["senior-living", "assisted-living", "memory-care", "api"],
+  "keywords": [
+    "senior-living",
+    "assisted-living",
+    "memory-care",
+    "api"
+  ],
   "author": "VIP Living Centers",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^4.18.2",
+    "mongoose": "^8.17.1",
     "nodemailer": "^7.0.5"
   },
   "devDependencies": {

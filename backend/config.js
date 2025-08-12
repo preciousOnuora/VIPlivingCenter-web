@@ -1,7 +1,7 @@
 // Configuration file for environment variables
 const config = {
   // Server configuration
-  port: process.env.PORT || 5000,
+  port: process.env.PORT || 5001, // Changed from 5000 to 5001
   nodeEnv: process.env.NODE_ENV || 'development',
   
   // Email configuration
@@ -11,6 +11,16 @@ const config = {
     user: process.env.EMAIL_USER || 'viplc.management@gmail.com',
     pass: process.env.EMAIL_PASS || '',
     secure: false
+  },
+  
+  // MongoDB configuration
+  mongodb: {
+    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/vip-living-centers',
+    options: {
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    }
   },
   
   // CORS configuration
@@ -25,7 +35,7 @@ const config = {
   api: {
     baseUrl: process.env.NODE_ENV === 'production'
       ? process.env.PRODUCTION_BACKEND_URL || 'https://yourdomain.com/api'
-      : `http://localhost:${process.env.PORT || 5000}/api`
+      : `http://localhost:${process.env.PORT || 5001}/api`
   }
 };
 
