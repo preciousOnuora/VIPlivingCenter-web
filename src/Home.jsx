@@ -8,7 +8,7 @@
  */
 import React, { useEffect } from 'react';
 import homeImg from './Images/homeImage.jpg';
-import welcomeVideo from './Videos/vipvideo.mp4';
+// import welcomeVideo from './Videos/vipvideo.mp4'; // Temporarily disabled for Vercel deployment
 import sunsetImg from './Images/sunset.jpg';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -92,7 +92,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Video Section */}
+      {/* Video Section - Temporarily replaced with placeholder */}
       <section className="home-video-section">
         <div className="home-video-container">
           <h2 data-aos="fade-up">Take a Virtual Tour</h2>
@@ -100,10 +100,11 @@ const Home = () => {
             See our facility and meet our caring staff
           </p>
           <div className="video-wrapper" data-aos="zoom-in">
-            <video controls>
-              <source src={welcomeVideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <div className="video-placeholder">
+              <p>🎥 Virtual Tour Video Coming Soon</p>
+              <p>Contact us to schedule an in-person tour!</p>
+              <Link to="/contact" className="cta-btn primary">Schedule a Tour</Link>
+            </div>
           </div>
         </div>
       </section>
