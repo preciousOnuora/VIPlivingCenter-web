@@ -33,10 +33,13 @@ const Home = () => {
     const handleScroll = () => {
       const scrollSection = document.querySelector('.scroll-section');
       if (scrollSection) {
-        if (window.scrollY > 100) {
+        console.log('Scroll Y:', window.scrollY); // Debug logging
+        if (window.scrollY > 200) { // Reduced from 800 to 200 for testing
           scrollSection.classList.add('scrolled');
+          console.log('Added scrolled class'); // Debug logging
         } else {
           scrollSection.classList.remove('scrolled');
+          console.log('Removed scrolled class'); // Debug logging
         }
       }
     };

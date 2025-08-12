@@ -991,8 +991,8 @@ font-size: large;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
   position: relative;
+  margin-top: -60px; /* Increased from -40px to -60px for even tighter spacing */
 }
 
 .scroll img {
@@ -1001,7 +1001,7 @@ font-size: large;
   object-fit: cover;
   border-radius: 4px;
   opacity: 1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.1s ease, transform 0.1s ease; /* Reduced from 0.3s to 0.1s for faster transition */
   cursor: pointer;
 }
 
@@ -1012,7 +1012,8 @@ font-size: large;
 /* Hide scroll image when scrolled down */
 .scroll-section.scrolled img {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-20px); /* Increased from -10px to -20px for more obvious effect */
+  pointer-events: none; /* Prevent interaction when hidden */
 }
 
 /* =================================

@@ -20,10 +20,12 @@ const Community = () => {
         <div className="content-wrapper">
           <img src={communityTextImg} alt="Community" className="community-hero-img" />
           <div className="text-content">
-            <h2>Building Connections</h2>
+            <h2>Activities</h2>
             <p>
-              At VIP Living Center, we believe that community is at the heart of a fulfilling life. Our residents form lasting friendships, share experiences, and create memories together. From group activities to shared meals, every day brings new opportunities to connect and grow. We foster an environment where everyone feels valued, heard, and part of something special.
-            </p>
+            Our Life Enrichment program is far from cookie-cutter. We continually evaluate and add new programs to engage our residents in meaningful ways.
+Life Enrichment coordinators plan a rotating calendar of engaging activities, including music therapy, art, trivia, book clubs, bonsai classes, foosball competitions, and so much more!
+We leverage technology to enhance our programs, like ZOOM, to allow our less ambulatory residents to be part of a gourmet club cook-off with our kitchen staff.
+           </p>
           </div>
         </div>
       </section>
@@ -31,9 +33,12 @@ const Community = () => {
       <section className='communityText-section2'>
         <div className="content-wrapper">
           <div className="text-content">
-            <h2>Creating Memories Together</h2>
+            <h2>Health & Wellness</h2>
             <p>
-              Every day at VIP Living Center is filled with opportunities to create meaningful memories. Whether it's participating in our engaging activities, enjoying delicious meals together, or simply sharing stories in our comfortable common areas, our residents build lasting bonds that enrich their lives. We believe that the best care includes fostering genuine connections and creating a true sense of family.
+            Expert training and attention to detail are the cornerstones of caregiving. Our staff forms tight bonds with residents and their families. They often compare caring for residents to caring for a member of their own family.
+Our staff knows each resident intimately. They proactively care for residents and notice changes in their condition quickly.
+A nurse is on staff to oversee and customize care plans for each resident and can communicate concerns to the primary care physician.
+Available medical referral services include a shortlist of recommended primary care doctors, physical and occupational therapists, podiatrists, geriatric psychiatrists, nearby pharmacies providing free medication delivery, mobile blood work, labs, and X-ray vendors.
             </p>
           </div>
           <img src={communityTextImg2} alt="Community" className="community-hero-img" />
@@ -44,10 +49,13 @@ const Community = () => {
         <div className="content-wrapper">
           <img src={communityTextImg3} alt="Community" className="community-hero-img" />
           <div className="text-content">
-            <h2>Building Connections</h2>
+            <h2>Our Culture</h2>
             <p>
-              At VIP Living Center, we believe that community is at the heart of a fulfilling life. Our residents form lasting friendships, share experiences, and create memories together. From group activities to shared meals, every day brings new opportunities to connect and grow. We foster an environment where everyone feels valued, heard, and part of something special.
-            </p>
+            At VIP Living Centers, our passion for service is what unites us. We not only serve our residents, but we also serve our employees. We put our employees first to create a supportive workplace that, in turn, better serves our residents.
+We strive to create a lifestyle for our residents that is vibrant, inspiring, and purposeful. We are dedicated to nurturing every relationship, to loving and celebrating our residents and our coworkers. And because of this dedication, our standards are high. We don’t settle for less than the best.
+Our commitment to our residents, families, and each other upholds the values outlined in our SERVICE affirmations.
+We seek to fulfill these values every day.
+           </p>
           </div>
         </div>
       </section>
