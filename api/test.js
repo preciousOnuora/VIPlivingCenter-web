@@ -1,3 +1,4 @@
+// Test API endpoint for Vercel serverless functions
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
