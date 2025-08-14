@@ -1,8 +1,12 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // MongoDB connection
 const connectDB = async () => {
   try {
+    if (mongoose.connection.readyState === 1) {
+      return mongoose.connection;
+    }
+    
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
