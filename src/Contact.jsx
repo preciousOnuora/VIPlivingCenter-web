@@ -25,9 +25,6 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    console.log('Submitting form to:', `${config.apiBaseUrl}/contact`);
-    console.log('Form data:', formData);
-
     try {
       const response = await fetch(`${config.apiBaseUrl}/contact`, {
         method: 'POST',
@@ -37,11 +34,7 @@ const Contact = () => {
         body: JSON.stringify(formData)
       });
       
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-      
       const result = await response.json();
-      console.log('Response data:', result);
       
       if (result.success) {
         setSubmitStatus({ type: 'success', message: result.message });
