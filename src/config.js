@@ -2,7 +2,7 @@
 const config = {
   // API base URL - automatically detects environment
   apiBaseUrl: process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_API_URL || 'https://yourdomain.com/api'
+    ? process.env.REACT_APP_API_URL || '/api' // Use relative path for Vercel
     : 'http://localhost:5001/api', // Updated to port 5001
   
   // Environment
