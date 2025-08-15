@@ -4,7 +4,16 @@ const config = require('./config');
 // MongoDB connection
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(config.mongodb.uri, config.mongodb.options);
+    console.log('🔍 Connecting to MongoDB with URI:', config.mongodb.uri);
+    
+    const connectionOptions = {
+      ...config.mongodb.options,
+      dbName: 'vip-living-centers'
+    };
+    
+    console.log('🔍 Connection options:', connectionOptions);
+    
+    const conn = await mongoose.connect(config.mongodb.uri, connectionOptions);
     
     console.log(`🗄️ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📊 Database: ${conn.connection.name}`);

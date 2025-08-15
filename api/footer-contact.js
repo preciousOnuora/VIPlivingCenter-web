@@ -1,23 +1,31 @@
 import mongoose from 'mongoose';
 
 // MongoDB connection
-const connectDB = async () => {
+let cachedConnection = null;
+
+async function connectToDatabase() {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
+  const MONGODB_URI = 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority';
+  
   try {
-    if (mongoose.connection.readyState === 1) {
-      return mongoose.connection;
-    }
-    
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+    const connection = await mongoose.connect(MONGODB_URI, {
+      dbName: 'vip-living-centers',
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     });
-    return conn;
+    
+    cachedConnection = connection;
+    console.log('🗄️ MongoDB Connected to Atlas');
+    return connection;
   } catch (error) {
-    console.error('MongoDB connection failed:', error.message);
+    console.error('❌ MongoDB connection failed:', error);
     throw error;
   }
-};
+}
 
 // Footer Contact Schema
 const footerContactSchema = new mongoose.Schema({
@@ -53,8 +61,7 @@ const footerContactSchema = new mongoose.Schema({
   },
   source: {
     type: String,
-    default: 'footer',
-    enum: ['footer', 'contact-page']
+    default: 'footer'
   },
   ipAddress: {
     type: String,
@@ -87,12 +94,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Connect to MongoDB
-    await connectDB();
+    // Connect to MongoDB Atlas
+    await connectToDatabase();
     
     const { name, email, phone, message } = req.body;
     
-    // Save to MongoDB
+    console.log('Footer form submitted:', { name, email, phone, message });
+    
+    // Save to MongoDB Atlas
     const footerContact = new FooterContact({
       name,
       email,
@@ -103,18 +112,18 @@ export default async function handler(req, res) {
     });
     
     await footerContact.save();
-    console.log('Footer contact saved to database:', footerContact._id);
+    console.log('Footer contact saved to MongoDB Atlas:', footerContact._id);
     
-    res.status(200).json({ 
-      success: true, 
+    res.status(200).json({
+      success: true,
       message: 'Thank you for your message! We will get back to you soon.',
       contactId: footerContact._id
     });
   } catch (error) {
     console.error('Footer form error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Failed to send message. Please try again later.' 
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send message. Please try again later.'
     });
   }
 } 

@@ -13,9 +13,9 @@ const config = {
     secure: false
   },
   
-  // MongoDB configuration
+  // MongoDB configuration - Updated to use MongoDB Atlas
   mongodb: {
-    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/vip-living-centers',
+    uri: process.env.MONGODB_URI || 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority',
     options: {
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,

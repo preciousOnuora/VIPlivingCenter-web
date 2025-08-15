@@ -26,28 +26,32 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      // Temporary solution: Simulate successful submission
-      // TODO: Replace with actual API call when Vercel API is working
-      console.log('Contact form submitted:', formData);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Show success message
-      setSubmitStatus({ 
-        type: 'success', 
-        message: 'Thank you for your message! We will get back to you soon.' 
+      // Send data to backend API
+      const response = await fetch(`${config.apiBaseUrl}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      // Optional: You can also send the data to your email or save it locally
-      // For now, we'll just log it to the console
-      
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitStatus({
+          type: 'success',
+          message: result.message || 'Thank you for your message! We will get back to you soon.'
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error(result.message || 'Failed to send message');
+      }
+
     } catch (error) {
       console.error('Error details:', error);
-      setSubmitStatus({ 
-        type: 'error', 
-        message: 'Failed to send message. Please try again later.' 
+      setSubmitStatus({
+        type: 'error',
+        message: 'Failed to send message. Please try again later.'
       });
     } finally {
       setIsSubmitting(false);
