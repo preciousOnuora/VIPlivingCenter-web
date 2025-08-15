@@ -40,17 +40,24 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
     setIsSubmitting(true);
     setSubmitStatus(null);
     
-    try {
-              // Send data to backend API
+          try {
+        console.log('🔍 Attempting to submit footer form to:', `${config.apiBaseUrl}/footer-contact-simple`);
+        console.log('📤 Footer form data:', footerFormData);
+        
+        // Send data to backend API
         const response = await fetch(`${config.apiBaseUrl}/footer-contact-simple`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(footerFormData)
-      });
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(footerFormData)
+        });
 
-      const result = await response.json();
+        console.log('📥 Footer response status:', response.status);
+        console.log('📥 Footer response headers:', response.headers);
+        
+        const result = await response.json();
+        console.log('📥 Footer response data:', result);
 
       if (response.ok && result.success) {
         setSubmitStatus({

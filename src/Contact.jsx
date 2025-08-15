@@ -25,17 +25,24 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    try {
-              // Send data to backend API
+          try {
+        console.log('🔍 Attempting to submit form to:', `${config.apiBaseUrl}/contact-simple`);
+        console.log('📤 Form data:', formData);
+        
+        // Send data to backend API
         const response = await fetch(`${config.apiBaseUrl}/contact-simple`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
 
-      const result = await response.json();
+        console.log('📥 Response status:', response.status);
+        console.log('📥 Response headers:', response.headers);
+        
+        const result = await response.json();
+        console.log('📥 Response data:', result);
 
       if (response.ok && result.success) {
         setSubmitStatus({
