@@ -20,7 +20,6 @@ import Contact from './Contact.jsx';
 import Home from './Home.jsx';
 import Policies from './Policies.jsx';
 import './App.css';
-
 // import homeImg from './Images/homeImage.jpg';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
