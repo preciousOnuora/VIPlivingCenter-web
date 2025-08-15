@@ -1,21 +1,28 @@
 import mongoose from 'mongoose';
 
-// MongoDB connection
+// MongoDB connection with better error handling
 let cachedConnection = null;
 
 async function connectToDatabase() {
-  if (cachedConnection) {
+  if (cachedConnection && cachedConnection.readyState === 1) {
     return cachedConnection;
   }
 
-  const MONGODB_URI = 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority';
-  
   try {
+    // Close existing connection if it exists
+    if (cachedConnection) {
+      await cachedConnection.close();
+    }
+
+    const MONGODB_URI = 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority';
+    
     const connection = await mongoose.connect(MONGODB_URI, {
       dbName: 'vip-living-centers',
-      maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 5,
+      serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 45000,
+      bufferCommands: false,
+      bufferMaxEntries: 0
     });
     
     cachedConnection = connection;
@@ -94,12 +101,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Connect to MongoDB Atlas
-    await connectToDatabase();
+    console.log('📝 Footer contact form request received');
     
+    // Validate request body
     const { name, email, phone, message } = req.body;
     
-    console.log('Footer form submitted:', { name, email, phone, message });
+    if (!name || !email || !phone || !message) {
+      return res.status(400).json({
+        success: false,
+        message: 'All fields are required'
+      });
+    }
+    
+    console.log('Footer form data:', { name, email, phone, message });
+    
+    // Connect to MongoDB Atlas
+    await connectToDatabase();
     
     // Save to MongoDB Atlas
     const footerContact = new FooterContact({
@@ -107,12 +124,12 @@ export default async function handler(req, res) {
       email,
       phone,
       message,
-      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      userAgent: req.headers['user-agent']
+      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'unknown',
+      userAgent: req.headers['user-agent'] || 'unknown'
     });
     
     await footerContact.save();
-    console.log('Footer contact saved to MongoDB Atlas:', footerContact._id);
+    console.log('✅ Footer contact saved to MongoDB Atlas:', footerContact._id);
     
     res.status(200).json({
       success: true,
@@ -120,7 +137,9 @@ export default async function handler(req, res) {
       contactId: footerContact._id
     });
   } catch (error) {
-    console.error('Footer form error:', error);
+    console.error('❌ Footer form error:', error);
+    
+    // Don't expose internal errors to client
     res.status(500).json({
       success: false,
       message: 'Failed to send message. Please try again later.'
