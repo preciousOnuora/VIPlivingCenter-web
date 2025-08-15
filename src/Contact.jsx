@@ -26,8 +26,8 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      // Send data to backend API
-      const response = await fetch(`${config.apiBaseUrl}/contact`, {
+              // Send data to backend API
+        const response = await fetch(`${config.apiBaseUrl}/contact-simple`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

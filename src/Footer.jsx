@@ -41,8 +41,8 @@ const Footer = ({ isOpen, toggleSidebar, currentPage, ToggleEvent }) => {
     setSubmitStatus(null);
     
     try {
-      // Send data to backend API
-      const response = await fetch(`${config.apiBaseUrl}/footer-contact`, {
+              // Send data to backend API
+        const response = await fetch(`${config.apiBaseUrl}/footer-contact-simple`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
