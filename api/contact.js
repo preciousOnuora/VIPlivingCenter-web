@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 // MongoDB connection with better error handling
 let cachedConnection = null;
@@ -14,7 +14,7 @@ async function connectToDatabase() {
       await cachedConnection.close();
     }
 
-    const MONGODB_URI = 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority';
+    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority';
     
     const connection = await mongoose.connect(MONGODB_URI, {
       dbName: 'vip-living-centers',
@@ -80,7 +80,7 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.models.Contact || mongoose.model('Contact', contactSchema);
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -99,6 +99,9 @@ export default async function handler(req, res) {
   try {
     console.log('📝 Contact form request received');
     
+    // Connect to MongoDB
+    await connectToDatabase();
+    
     // Validate request body
     const { name, email, subject, message } = req.body;
     
@@ -111,34 +114,33 @@ export default async function handler(req, res) {
     
     console.log('Contact form data:', { name, email, subject, message });
     
-    // Connect to MongoDB Atlas
-    await connectToDatabase();
-    
-    // Save to MongoDB Atlas
-    const contact = new Contact({
+    // Create and save the contact to database
+    const newContact = new Contact({
       name,
       email,
       subject,
       message,
-      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'unknown',
-      userAgent: req.headers['user-agent'] || 'unknown'
+      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      userAgent: req.headers['user-agent']
     });
     
-    await contact.save();
-    console.log('✅ Contact saved to MongoDB Atlas:', contact._id);
+    const savedContact = await newContact.save();
+    console.log('✅ Contact saved to database:', savedContact._id);
     
     res.status(200).json({
       success: true,
       message: 'Thank you for your message! We will get back to you soon.',
-      contactId: contact._id
+      receivedData: { name, email, subject, message },
+      savedId: savedContact._id,
+      mongoStatus: 'Data saved successfully'
     });
   } catch (error) {
     console.error('❌ Contact form error:', error);
     
-    // Don't expose internal errors to client
     res.status(500).json({
       success: false,
-      message: 'Failed to send message. Please try again later.'
+      message: 'Failed to send message. Please try again later.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 } 
