@@ -23,6 +23,18 @@ const connectDB = async () => {
   }
 };
 
+// Create a simple schema for footer contacts
+const footerContactSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String, required: true },
+  message: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now }
+});
+
+// Create model if it doesn't exist
+const FooterContact = mongoose.models.FooterContact || mongoose.model('FooterContact', footerContactSchema);
+
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,13 +69,23 @@ module.exports = async function handler(req, res) {
     
     console.log('Footer form data:', { name, email, phone, message });
     
-    // For now, just return success without saving to database
-    // We'll add the database save once connection is confirmed
+    // Create and save the contact to database
+    const newContact = new FooterContact({
+      name,
+      email,
+      phone,
+      message
+    });
+    
+    const savedContact = await newContact.save();
+    console.log('✅ Contact saved to database:', savedContact._id);
+    
     res.status(200).json({
       success: true,
       message: 'Thank you for your message! We will get back to you soon.',
       receivedData: { name, email, phone, message },
-      mongoStatus: 'Connected successfully'
+      savedId: savedContact._id,
+      mongoStatus: 'Data saved successfully'
     });
   } catch (error) {
     console.error('❌ Footer form error:', error);
