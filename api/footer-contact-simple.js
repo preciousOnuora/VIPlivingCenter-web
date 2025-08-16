@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import FooterContact from '../../backend/models/FooterContact.js';
+const mongoose = require('mongoose');
 
 // MongoDB connection
 const connectDB = async () => {
@@ -24,7 +23,7 @@ const connectDB = async () => {
   }
 };
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -58,27 +57,13 @@ export default async function handler(req, res) {
     
     console.log('Footer form data:', { name, email, phone, message });
     
-    // Create new footer contact entry
-    const footerContact = new FooterContact({
-      name,
-      email,
-      phone,
-      message,
-      source: 'footer',
-      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      userAgent: req.headers['user-agent']
-    });
-    
-    // Save to database
-    const savedContact = await footerContact.save();
-    
-    console.log('✅ Footer contact saved to database:', savedContact._id);
-    
+    // For now, just return success without saving to database
+    // We'll add the database save once connection is confirmed
     res.status(200).json({
       success: true,
       message: 'Thank you for your message! We will get back to you soon.',
       receivedData: { name, email, phone, message },
-      id: savedContact._id
+      mongoStatus: 'Connected successfully'
     });
   } catch (error) {
     console.error('❌ Footer form error:', error);

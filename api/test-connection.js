@@ -1,4 +1,6 @@
-export default async function handler(req, res) {
+const { MongoClient } = require('mongodb');
+
+module.exports = async function handler(req, res) {
   try {
     console.log('🧪 Testing connection...');
     
@@ -14,15 +16,12 @@ export default async function handler(req, res) {
       });
     }
     
-    // Test basic connection without mongoose
-    const { MongoClient } = await import('mongodb');
+    console.log('🔌 Attempting to connect...');
     
     const client = new MongoClient(mongoUri, {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     });
-    
-    console.log('🔌 Attempting to connect...');
     
     await client.connect();
     console.log('✅ Connected to MongoDB!');
