@@ -1,4 +1,75 @@
-export default function handler(req, res) {
+const mongoose = require('mongoose');
+
+// MongoDB connection
+const connectDB = async () => {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      return; // Already connected
+    }
+    
+    const uri = process.env.MONGODB_URI || 'mongodb+srv://preonu:hiya1212@cluster0.sg0wcaf.mongodb.net/?retryWrites=true&w=majority';
+    
+    await mongoose.connect(uri, {
+      dbName: 'vip-living-centers',
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    
+    console.log('🗄️ MongoDB connected successfully');
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error);
+    throw error;
+  }
+};
+
+// Contact Schema
+const contactSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    trim: true,
+    maxlength: [100, 'Name cannot exceed 100 characters']
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    trim: true,
+    lowercase: true,
+    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
+  },
+  subject: {
+    type: String,
+    required: [true, 'Subject is required'],
+    trim: true,
+    maxlength: [200, 'Subject cannot exceed 200 characters']
+  },
+  message: {
+    type: String,
+    required: [true, 'Message is required'],
+    trim: true,
+    maxlength: [1000, 'Message cannot exceed 1000 characters']
+  },
+  status: {
+    type: String,
+    enum: ['new', 'read', 'replied', 'archived'],
+    default: 'new'
+  },
+  ipAddress: {
+    type: String,
+    trim: true
+  },
+  userAgent: {
+    type: String,
+    trim: true
+  }
+}, {
+  timestamps: true
+});
+
+const Contact = mongoose.models.Contact || mongoose.model('Contact', contactSchema);
+
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -17,6 +88,9 @@ export default function handler(req, res) {
   try {
     console.log('📝 Contact form request received');
     
+    // Connect to MongoDB
+    await connectDB();
+    
     // Validate request body
     const { name, email, subject, message } = req.body;
     
@@ -29,18 +103,33 @@ export default function handler(req, res) {
     
     console.log('Contact form data:', { name, email, subject, message });
     
-    // For now, just return success without saving to database
+    // Create and save the contact to database
+    const newContact = new Contact({
+      name,
+      email,
+      subject,
+      message,
+      ipAddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      userAgent: req.headers['user-agent']
+    });
+    
+    const savedContact = await newContact.save();
+    console.log('✅ Contact saved to database:', savedContact._id);
+    
     res.status(200).json({
       success: true,
       message: 'Thank you for your message! We will get back to you soon.',
-      receivedData: { name, email, subject, message }
+      receivedData: { name, email, subject, message },
+      savedId: savedContact._id,
+      mongoStatus: 'Data saved successfully'
     });
   } catch (error) {
     console.error('❌ Contact form error:', error);
     
     res.status(500).json({
       success: false,
-      message: 'Failed to send message. Please try again later.'
+      message: 'Failed to send message. Please try again later.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 } 
